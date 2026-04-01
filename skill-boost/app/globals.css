@@ -1,0 +1,323 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Google Font: Inter ────────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+/* ─── Design Tokens ─────────────────────────────────────────────────────── */
+:root {
+  /* Brand palette */
+  --color-bg:        #0D1B3E;
+  --color-surface:   #1A2C5B;
+  --color-surface-2: #223570;
+  --color-accent:    #F97316;
+  --color-accent-hover: #EA6C10;
+  --color-muted:     #8A9BB5;
+  --color-text:      #E2E8F0;
+  --color-text-soft: #CBD5E1;
+  --color-border:    #1A2C5B;
+  --color-success:   #22C55E;
+  --color-danger:    #EF4444;
+
+  /* Radii */
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  18px;
+  --radius-xl:  24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px 0 rgba(0,0,0,0.35);
+  --shadow-glow: 0 0 24px rgba(249,115,22,0.25);
+
+  /* shadcn/ui CSS variable overrides */
+  --background:          240 35% 15%;
+  --foreground:          214 32% 91%;
+  --card:                224 51% 23%;
+  --card-foreground:     214 32% 91%;
+  --popover:             224 51% 23%;
+  --popover-foreground:  214 32% 91%;
+  --primary:             24 95% 53%;
+  --primary-foreground:  0 0% 100%;
+  --secondary:           224 51% 28%;
+  --secondary-foreground: 214 32% 91%;
+  --muted:               217 24% 38%;
+  --muted-foreground:    215 20% 65%;
+  --accent:              24 95% 53%;
+  --accent-foreground:   0 0% 100%;
+  --destructive:         0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border:              224 51% 23%;
+  --input:               224 51% 23%;
+  --ring:                24 95% 53%;
+  --radius: 0.75rem;
+}
+
+/* ─── Base Reset ────────────────────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    height: 100%;
+  }
+
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100dvh;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Bottom padding so content isn't hidden behind BottomNav */
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-text);
+  }
+
+  p {
+    color: var(--color-text-soft);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  input, textarea, select {
+    font-family: inherit;
+  }
+
+  /* Scrollbar — minimal dark style */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-surface-2);
+    border-radius: var(--radius-full);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-muted);
+  }
+}
+
+/* ─── Component Layer ───────────────────────────────────────────────────── */
+@layer components {
+
+  /* Glassmorphism surface */
+  .glass {
+    background: rgba(26, 44, 91, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Accent gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #F97316 0%, #FBBF24 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Page wrapper — respects bottom nav height */
+  .page-container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 1.25rem 1rem 5.5rem;
+    min-height: 100dvh;
+  }
+
+  /* Card surface */
+  .card-surface {
+    background-color: var(--color-surface);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Primary button */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: var(--color-accent);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-full);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  }
+  .btn-primary:hover {
+    background-color: var(--color-accent-hover);
+    box-shadow: var(--shadow-glow);
+  }
+  .btn-primary:active {
+    transform: scale(0.97);
+  }
+
+  /* Ghost button */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: var(--color-text-soft);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  /* Input field */
+  .input-field {
+    width: 100%;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .input-field::placeholder {
+    color: var(--color-muted);
+  }
+  .input-field:focus {
+    border-color: var(--color-accent);
+  }
+
+  /* Badge */
+  .badge {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    border-radius: var(--radius-full);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .badge-accent {
+    background-color: rgba(249, 115, 22, 0.15);
+    color: var(--color-accent);
+    border: 1px solid rgba(249, 115, 22, 0.3);
+  }
+  .badge-muted {
+    background-color: rgba(138, 155, 181, 0.12);
+    color: var(--color-muted);
+  }
+
+  /* Section heading */
+  .section-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 0.75rem;
+  }
+
+  /* Animated skeleton loader */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--color-surface) 25%,
+      var(--color-surface-2) 50%,
+      var(--color-surface) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+    border-radius: var(--radius-md);
+  }
+}
+
+/* ─── Utility Layer ─────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-muted {
+    color: var(--color-muted);
+  }
+  .text-accent {
+    color: var(--color-accent);
+  }
+  .bg-surface {
+    background-color: var(--color-surface);
+  }
+  .bg-surface-2 {
+    background-color: var(--color-surface-2);
+  }
+  .border-surface {
+    border-color: var(--color-surface);
+  }
+  .safe-bottom {
+    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* ─── Keyframes ─────────────────────────────────────────────────────────── */
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(249,115,22,0.3); }
+  50%       { box-shadow: 0 0 20px rgba(249,115,22,0.6); }
+}
+
+.animate-fade-in   { animation: fade-in 0.35s ease forwards; }
+.animate-slide-up  { animation: slide-up 0.4s ease forwards; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+/* ─── PWA / Mobile overrides ────────────────────────────────────────────── */
+/* Remove tap highlight on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent overscroll bounce on iOS */
+html, body {
+  overscroll-behavior: none;
+}

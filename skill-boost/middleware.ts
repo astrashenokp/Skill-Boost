@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: { name: string; value: string; options: any }[]) {
           // Apply cookies to the request first (so the server client can read them)
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
@@ -49,9 +49,13 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // ── Protected routes ──────────────────────────────────────────────────────
-  // Any path that starts with /app or /admin requires authentication.
+  // NOTE: (app) is a Next.js route GROUP — it is invisible in the URL.
+  // So /profile, /survey, /quiz require auth — but /dashboard, /courses, /lesson are public.
   const isProtected =
-    pathname.startsWith("/app") || pathname.startsWith("/admin");
+    pathname.startsWith("/profile") ||
+    pathname.startsWith("/survey") ||
+    pathname.startsWith("/quiz") ||
+    pathname.startsWith("/admin");
 
   if (isProtected && !user) {
     const loginUrl = request.nextUrl.clone();
@@ -76,7 +80,7 @@ export async function middleware(request: NextRequest) {
   // Send visitors at "/" to the appropriate place.
   if (pathname === "/") {
     const target = request.nextUrl.clone();
-    target.pathname = user ? "/app/dashboard" : "/login";
+    target.pathname = "/dashboard";
     return NextResponse.redirect(target);
   }
 
